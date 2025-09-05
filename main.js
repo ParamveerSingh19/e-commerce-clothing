@@ -1,6 +1,4 @@
-// =====================================================================
-// === DOM ELEMENTS & VARIABLES ===
-// =====================================================================
+// DOM ELEMENTS & VARIABLES
 const mainContent = document.getElementById("main-content");
 const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
 const mobileNavMenu = document.querySelector(".mobile-nav-menu");
@@ -28,9 +26,7 @@ const cartSummaryElement = document.getElementById("cart-summary");
 const mobileCloseBtn = document.querySelector(".mobile-close");
 const siteHeader = document.getElementById("site-header");
 
-// =====================================================================
-// === HELPERS: Sync header height to CSS var (so drawer doesn't cover it)
-// =====================================================================
+// HELPERS: Sync header height to CSS var
 function syncHeaderHeightVar() {
   if (!siteHeader) return;
   const h = siteHeader.offsetHeight || 64;
@@ -39,30 +35,15 @@ function syncHeaderHeightVar() {
 syncHeaderHeightVar();
 window.addEventListener("resize", syncHeaderHeightVar);
 
-// =====================================================================
-// === CORE WEBSITE FUNCTIONALITY ===
-// =====================================================================
-
+// CORE WEBSITE FUNCTIONALITY
 function handleMobileNav() {
-  // Toggle hamburger icon (morph to X)
-  mobileMenuToggle.classList.toggle("active");
-
-  // Toggle drawer & overlay
-  mobileNavMenu.classList.toggle("visible");
-  mobileNavOverlay.classList.toggle("visible");
-
-  // Blur rest of the page
   body.classList.toggle("menu-open");
 
-  // Update aria-hidden for accessibility
-  const isOpen = mobileNavMenu.classList.contains("visible");
+  const isOpen = body.classList.contains("menu-open");
   mobileNavMenu.setAttribute("aria-hidden", String(!isOpen));
 }
 
 function closeMobileNav() {
-  mobileMenuToggle.classList.remove("active");
-  mobileNavMenu.classList.remove("visible");
-  mobileNavOverlay.classList.remove("visible");
   body.classList.remove("menu-open");
   mobileNavMenu.setAttribute("aria-hidden", "true");
 }
@@ -90,9 +71,7 @@ function handleFormToggle() {
   }
 }
 
-// =====================================================================
-// === E-COMMERCE LOGIC ===
-// =====================================================================
+// E-COMMERCE LOGIC
 
 function initializeCounts() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -127,12 +106,12 @@ function toggleWishlist(product) {
     wishlist.push(product);
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     updateWishlistDisplay(wishlist.length);
-    return true; // Added
+    return true;
   } else {
     wishlist.splice(index, 1);
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     updateWishlistDisplay(wishlist.length);
-    return false; // Removed
+    return false;
   }
 }
 
@@ -222,8 +201,9 @@ function renderWishlistItems() {
   wishlistItemsContainer.innerHTML = "";
 
   if (wishlist.length === 0) {
+    /* Fix: Use the new empty-message class for centering */
     wishlistItemsContainer.innerHTML =
-      "<p style='text-align:center; padding: 2rem;'>Your wishlist is empty.</p>";
+      "<div class='empty-message'>Your wishlist is empty.</div>";
   } else {
     wishlist.forEach((product) => {
       const itemElement = document.createElement("div");
@@ -253,9 +233,6 @@ function renderWishlistItems() {
   }
 }
 
-// =====================================================================
-// === E-COMMERCE LOGIC (Updated) ===
-// =====================================================================
 function renderCartItems() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -277,8 +254,9 @@ function renderCartItems() {
   if (cart.length === 0) {
     // If cart is empty, show the "empty" message
     if (cartItemsContainer) {
+      /* Fix: Use the new empty-message class for centering */
       cartItemsContainer.innerHTML =
-        "<p style='text-align:center; padding: 2rem;'>Your cart is empty.</p>";
+        "<div class='empty-message'>Your cart is empty.</div>";
     }
   } else {
     let total = 0;
@@ -289,7 +267,6 @@ function renderCartItems() {
       const itemElement = document.createElement("div");
       itemElement.className = "cart-item";
       itemElement.dataset.productId = product.id;
-      // ... rest of itemElement.innerHTML ...
       itemElement.innerHTML = `
         <img src="${product.image}" alt="${
         product.name
@@ -319,12 +296,12 @@ function renderCartItems() {
     cartSummaryElement.innerHTML = `
         <h3 class="summary-title">Order Summary</h3>
         <div class="summary-line">
-            <span>Subtotal</span>
-            <span>₹${total.toFixed(2)}</span>
+          <span>Subtotal</span>
+          <span>₹${total.toFixed(2)}</span>
         </div>
         <div class="summary-line total-line">
-            <span>Total</span>
-            <span>₹${total.toFixed(2)}</span>
+          <span>Total</span>
+          <span>₹${total.toFixed(2)}</span>
         </div>
         <button class="btn btn-primary checkout-btn">Proceed to Checkout</button>
     `;
@@ -348,9 +325,7 @@ function handleSearch() {
   }
 }
 
-// =====================================================================
-// === EVENT LISTENERS & INITIALIZATION ===
-// =====================================================================
+// EVENT LISTENERS & INITIALIZATION
 
 // Hamburger toggle + drawer/overlay control
 mobileMenuToggle.addEventListener("click", handleMobileNav);
@@ -379,7 +354,7 @@ if (searchIconBtn) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  syncHeaderHeightVar(); // ensure header height var correct on load
+  syncHeaderHeightVar();
   initializeCounts();
   handleFormToggle();
   handleSearch();

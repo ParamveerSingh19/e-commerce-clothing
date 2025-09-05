@@ -1,6 +1,4 @@
-/* ===================================================================== */
-/* === FONT IMPORT & CSS RESET === */
-/* ===================================================================== */
+/* FONT IMPORT & CSS RESET */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
@@ -21,9 +19,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ===================================================================== */
-/* === THEME VARIABLES === */
-/* ===================================================================== */
+/* THEME VARIABLES */
 
 body {
   transition: background 0.3s ease, color 0.3s ease;
@@ -35,10 +31,6 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
 }
-
-/* ===================================================================== */
-/* === THEME VARIABLES (Updated) === */
-/* ===================================================================== */
 
 body.theme-light {
   --bg-color: #e0e0e0;
@@ -54,9 +46,7 @@ body.theme-light {
   --section-gradient-end: #f0f0f0;
 }
 
-/* ===================================================================== */
-/* === GLOBAL & UTILITIES === */
-/* ===================================================================== */
+/* GLOBAL & UTILITIES */
 
 .container {
   max-width: 1400px;
@@ -138,9 +128,7 @@ img {
   user-select: none;
 }
 
-/* ===================================================================== */
-/* === HEADER & NAVIGATION === */
-/* ===================================================================== */
+/* HEADER & NAVIGATION */
 
 header {
   position: sticky;
@@ -237,7 +225,7 @@ header.scrolled {
 }
 
 .search-container {
-  display: none; /* Hide on mobile by default */
+  display: none;
 }
 
 .search-input {
@@ -253,15 +241,13 @@ header.scrolled {
   color: var(--muted-text);
 }
 
-/* === HAMBURGER === */
+/* HAMBURGER */
 .mobile-menu-btn {
   z-index: 100;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-
-/* New: Hamburger hover effect */
 .mobile-menu-btn:hover {
   background: var(--accent-ui);
 }
@@ -299,36 +285,26 @@ header.scrolled {
 .mobile-menu-icon::after {
   top: 6px;
 }
-
-/* Corrected: Hide the hamburger icon when the menu is active */
-.mobile-menu-btn.active {
-  display: none;
-}
-
-/* The mobile close button is now the only one that appears */
 .mobile-close {
+  display: none !important;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.5rem;
   font-size: 2rem;
-  color: var(--muted-text); /* Default color for the icon */
+  color: var(--muted-text);
   transition: all 0.2s ease;
 }
 
-/* Corrected: This will make the 'X' icon white on hover and apply the pink background */
-.mobile-close:hover {
-  background: var(--accent-ui); /* Pink background on hover */
-  /* No need to set color here, it's handled by .icon-btn:hover or the explicit i rule below */
-}
-.mobile-close:hover i {
-  color: white; /* White icon color on hover */
+body.menu-open .mobile-close {
+  display: block !important;
 }
 
-/* ===================================================================== */
-/* === MOBILE DRAWER === */
-/* ===================================================================== */
+body.menu-open .mobile-menu-btn {
+  display: none;
+}
 
+/* MOBILE DRAWER */
 :root {
   --header-height: 64px;
 }
@@ -347,7 +323,7 @@ header.scrolled {
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-.mobile-nav-overlay.visible {
+body.menu-open .mobile-nav-overlay {
   opacity: 1;
   visibility: visible;
 }
@@ -369,7 +345,7 @@ header.scrolled {
   border-radius: 12px;
 }
 
-.mobile-nav-menu.visible {
+body.menu-open .mobile-nav-menu {
   transform: translateX(0);
 }
 
@@ -401,13 +377,10 @@ header.scrolled {
 }
 
 .mobile-nav-menu .nav-link:hover {
-  color: var(--accent-ui); /* same as footer hover effect */
+  color: var(--accent-ui);
 }
 
-/* ===================================================================== */
-/* === HERO SECTION === */
-/* ===================================================================== */
-
+/* HERO SECTION */
 .hero-section {
   display: flex;
   flex-direction: column;
@@ -459,13 +432,9 @@ header.scrolled {
   justify-content: center;
 }
 
-/* ===================================================================== */
-/* === PRODUCT GRID === */
-/* ===================================================================== */
-
+/* PRODUCT GRID */
 .products-section {
   padding: 4rem 0;
-  /* Applies a different background for visual separation */
   background-color: var(--section-bg);
   border-top: 1px solid var(--border-color);
   margin-top: 180px;
@@ -562,10 +531,7 @@ header.scrolled {
   fill: red;
 }
 
-/* ===================================================================== */
-/* === CART & WISHLIST PAGE STYLES === */
-/* ===================================================================== */
-
+/* CART & WISHLIST PAGE STYLES */
 .cart-item,
 .wishlist-item {
   display: flex;
@@ -654,11 +620,18 @@ header.scrolled {
 .checkout-btn {
   width: 100%;
 }
+.empty-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  text-align: center;
+  color: var(--muted-text);
+  font-size: 1.25rem;
+}
 
-/* ===================================================================== */
-/* === PROFILE PAGE STYLES === */
-/* ===================================================================== */
-
+/* PROFILE PAGE STYLES */
 #profile-section {
   padding: 4rem 0;
   display: flex;
@@ -747,15 +720,13 @@ header.scrolled {
   text-decoration: underline;
 }
 
-/* ===================================================================== */
-/* === FOOTER === */
-/* ===================================================================== */
-
+/* FOOTER */
 footer {
-  padding: 3rem 0;
+  padding: 1.5rem 0;
   margin-top: auto;
-  background-color: var(--bg-color);
+  background-color: #000000;
   border-top: 1px solid var(--border-color);
+  color: #ffffff;
 }
 .footer-content {
   display: flex;
@@ -767,12 +738,12 @@ footer {
 
 .footer-logo-text {
   font-weight: 700;
-  color: var(--text-color);
+  color: #ffffff;
 }
 
 .footer-copyright {
   font-size: 0.875rem;
-  color: var(--muted-text);
+  color: #cccccc;
 }
 
 .social-links {
@@ -782,7 +753,7 @@ footer {
 }
 
 .social-icon {
-  color: var(--muted-text);
+  color: #cccccc;
   transition: color 0.2s ease;
 }
 
@@ -790,20 +761,14 @@ footer {
   color: var(--accent-ui);
 }
 
-/* ===================================================================== */
-/* === BODY BLUR ON MENU OPEN === */
-/* ===================================================================== */
-
+/* BODY BLUR ON MENU OPEN */
 body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   filter: blur(5px);
   transition: filter 0.3s ease-in-out;
   pointer-events: none;
 }
 
-/* ===================================================================== */
-/* === MEDIA QUERIES === */
-/* ===================================================================== */
-
+/* MEDIA QUERIES */
 @media (min-width: 640px) {
   .desktop-nav {
     display: flex;
@@ -876,5 +841,37 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   }
   .footer-content {
     flex-direction: row;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-logo-text {
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .cart-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-items {
+    width: 100%;
+  }
+
+  .cart-summary {
+    width: 100%;
+    margin-top: 2rem;
   }
 }
