@@ -1,8 +1,5 @@
-/*
-================================================================================
-  FONT IMPORT & CSS RESET
-================================================================================
-*/
+/* FONT IMPORT & CSS RESET */
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 * {
@@ -22,11 +19,8 @@ html {
   scroll-behavior: smooth;
 }
 
-/*
-================================================================================
-  THEME VARIABLES
-================================================================================
-*/
+/* THEME VARIABLES */
+
 body {
   transition: background 0.3s ease, color 0.3s ease;
   min-height: 100vh;
@@ -50,31 +44,10 @@ body.theme-light {
   --border-color: rgba(0, 0, 0, 0.1);
   --section-gradient-start: #e0e0e0;
   --section-gradient-end: #f0f0f0;
-  --accent-bg: #ffeded;
-  --accent-text: #ff007f;
 }
 
-body.theme-dark {
-  --bg-color: #1a1a1a;
-  --section-bg: #222222;
-  --header-bg: rgba(26, 26, 26, 0.95);
-  --card-bg: rgba(34, 34, 34, 0.95);
-  --text-color: #f0f0f0;
-  --muted-text: #aaaaaa;
-  --accent: #ff007f;
-  --accent-ui: #ff4da6;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --section-gradient-start: #1a1a1a;
-  --section-gradient-end: #222222;
-  --accent-bg: #3d001b;
-  --accent-text: #ff4da6;
-}
+/* GLOBAL & UTILITIES */
 
-/*
-================================================================================
-  GLOBAL & UTILITIES
-================================================================================
-*/
 .container {
   max-width: 1400px;
   margin-left: auto;
@@ -155,11 +128,8 @@ img {
   user-select: none;
 }
 
-/*
-================================================================================
-  HEADER & NAVIGATION
-================================================================================
-*/
+/* HEADER & NAVIGATION */
+
 header {
   position: sticky;
   top: 0;
@@ -279,11 +249,7 @@ header.scrolled {
   color: var(--muted-text);
 }
 
-/*
-================================================================================
-  MOBILE DRAWER
-================================================================================
-*/
+/* MOBILE DRAWER */
 :root {
   --header-height: 64px;
 }
@@ -359,11 +325,7 @@ body.menu-open .mobile-nav-menu {
   color: var(--accent-ui);
 }
 
-/*
-================================================================================
-  HERO SECTION
-================================================================================
-*/
+/* HERO SECTION */
 .hero-section {
   display: flex;
   flex-direction: column;
@@ -415,11 +377,7 @@ body.menu-open .mobile-nav-menu {
   justify-content: center;
 }
 
-/*
-================================================================================
-  PRODUCT GRID
-================================================================================
-*/
+/* PRODUCT GRID */
 .products-section {
   padding: 4rem 0;
   background-color: var(--section-bg);
@@ -519,25 +477,7 @@ body.menu-open .mobile-nav-menu {
   fill: red;
 }
 
-/*
-================================================================================
-  CART & WISHLIST PAGE STYLES
-================================================================================
-*/
-.cart-page-content,
-.wishlist-page-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.cart-items,
-.wishlist-items {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
+/* CART & WISHLIST PAGE STYLES */
 .cart-item,
 .wishlist-item {
   display: flex;
@@ -547,7 +487,7 @@ body.menu-open .mobile-nav-menu {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
 }
 
 .cart-item-image,
@@ -632,17 +572,13 @@ body.menu-open .mobile-nav-menu {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 50vh;
+  height: 50vh;
   text-align: center;
   color: var(--muted-text);
   font-size: 1.25rem;
 }
 
-/*
-================================================================================
-  PROFILE PAGE STYLES
-================================================================================
-*/
+/* PROFILE PAGE STYLES */
 #profile-section {
   padding: 4rem 0;
   display: flex;
@@ -731,11 +667,7 @@ body.menu-open .mobile-nav-menu {
   text-decoration: underline;
 }
 
-/*
-================================================================================
-  FOOTER
-================================================================================
-*/
+/* FOOTER */
 footer {
   padding: 1.5rem 0;
   margin-top: auto;
@@ -777,71 +709,15 @@ footer {
   color: var(--accent-ui);
 }
 
-/*
-================================================================================
-  BODY BLUR ON MENU OPEN
-================================================================================
-*/
+/* BODY BLUR ON MENU OPEN */
 body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   filter: blur(5px);
   transition: filter 0.3s ease-in-out;
   pointer-events: none;
 }
 
-/*
-================================================================================
-  MEDIA QUERIES
-================================================================================
-*/
-/* Mobile-first approach (less than 640px) */
-@media (max-width: 640px) {
-  .footer-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+/* MEDIA QUERIES */
 
-  .social-links {
-    justify-content: center;
-  }
-
-  .footer-logo-text {
-    text-align: center;
-  }
-
-  .products-section {
-    margin-top: 0px;
-  }
-
-  .cart-page-content,
-  .wishlist-page-content {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  /* Specific fixes for mobile view */
-  .cart-item,
-  .wishlist-item {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .cart-item-image,
-  .wishlist-item-image {
-    margin-bottom: 1rem;
-  }
-
-  .cart-actions {
-    justify-content: center;
-  }
-
-  .empty-message {
-    padding: 0 1rem;
-    height: 60vh;
-  }
-}
-
-/* Tablet and Desktop (min-width: 640px) */
 @media (min-width: 640px) {
   .desktop-nav {
     display: flex;
@@ -860,7 +736,7 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   }
 
   .search-container:focus-within {
-    background-color: var(--section-bg);
+    background-color: #d0d0d0;
   }
 
   .search-btn {
@@ -918,17 +794,49 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   }
 }
 
-/* Large screens (min-width: 1024px) */
-@media (min-width: 1024px) {
-  .cart-page-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: flex-start;
+@media (max-width: 640px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-logo-text {
+    text-align: center;
+  }
+
+  .products-section {
+    margin-top: 0px;
+  }
+
+  .cart-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .cart-items {
+    width: 100%;
   }
 
   .cart-summary {
-    position: sticky;
-    top: 96px; /* Adjust as needed */
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .wishlist-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .footer {
+    margin-bottom: 0px;
   }
 }
