@@ -331,7 +331,7 @@ body.menu-open .mobile-nav-overlay {
 .mobile-nav-menu {
   position: fixed;
   top: var(--header-height);
-  left: 0;
+  right: 0;
   width: 280px;
   max-width: 90vw;
   background: var(--card-bg);
