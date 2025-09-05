@@ -105,21 +105,37 @@ function toggleWishlist(product) {
 }
 
 function updateCartDisplay(count) {
-  if (cartIcon) {
-    if (count > 0) {
-      cartIcon.innerHTML = `<i class="bx bx-shopping-bag"></i><span class="cart-badge">${count}</span>`;
-    } else {
-      cartIcon.innerHTML = `<i class="bx bx-shopping-bag"></i>`;
+  if (!cartIcon) return;
+  let badge = cartIcon.querySelector(".cart-badge");
+  if (count > 0) {
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.className = "cart-badge";
+      cartIcon.appendChild(badge);
+    }
+    badge.textContent = count;
+    badge.style.display = "flex"; // Ensure it's visible on mobile
+  } else {
+    if (badge) {
+      badge.style.display = "none";
     }
   }
 }
 
 function updateWishlistDisplay(count) {
-  if (wishlistIcon) {
-    if (count > 0) {
-      wishlistIcon.innerHTML = `<i class="bx bxs-heart"></i><span class="cart-badge">${count}</span>`;
-    } else {
-      wishlistIcon.innerHTML = `<i class="bx bx-heart"></i>`;
+  if (!wishlistIcon) return;
+  let badge = wishlistIcon.querySelector(".cart-badge");
+  if (count > 0) {
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.className = "cart-badge";
+      wishlistIcon.appendChild(badge);
+    }
+    badge.textContent = count;
+    badge.style.display = "flex"; // Ensure it's visible on mobile
+  } else {
+    if (badge) {
+      badge.style.display = "none";
     }
   }
 }
