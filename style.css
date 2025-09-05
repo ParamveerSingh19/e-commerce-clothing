@@ -813,11 +813,13 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
     margin-top: 0px;
   }
 
+  /* FIX: Ensure the grid containers are a flexible column layout on mobile */
+  .products-grid,
   .cart-grid {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    gap: 1rem;
+    gap: 1.5rem; /* Consistent gap between items */
   }
 
   .cart-items {
@@ -829,14 +831,23 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
     margin-top: 2rem;
   }
 
-  .wishlist-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
   .footer {
     margin-bottom: 0px;
+  }
+
+  /* FIX: Adjust styles for wishlist and cart items */
+  .cart-item,
+  .wishlist-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .cart-item-image,
+  .wishlist-item-image {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
   }
 }
