@@ -20,7 +20,6 @@ const wishlistItemsContainer = document.getElementById(
   "wishlist-items-container"
 );
 const cartItemsContainer = document.querySelector(".cart-items");
-const cartSummaryElement = document.getElementById("cart-summary");
 
 // NEW: close button inside drawer & dynamic header height var
 const mobileCloseBtn = document.querySelector(".mobile-close");
@@ -37,19 +36,11 @@ window.addEventListener("resize", syncHeaderHeightVar);
 
 // CORE WEBSITE FUNCTIONALITY
 
-// FIX: Combined the logic into a single toggle function
+// This is the new, combined logic from your other code
 function toggleMobileNav() {
-  // Check if the menu is currently open
   const isOpen = body.classList.toggle("menu-open");
-  // Set the aria-hidden attribute based on the new state
-  mobileNavMenu.setAttribute("aria-hidden", String(!isOpen));
-}
-
-// Function to handle opening the search bar, remains the same
-function handleSearchToggle() {
-  searchContainer.classList.toggle("active");
-  if (searchContainer.classList.contains("active")) {
-    searchInput && searchInput.focus();
+  if (mobileNavMenu) {
+    mobileNavMenu.setAttribute("aria-hidden", String(!isOpen));
   }
 }
 
@@ -156,6 +147,7 @@ function createProductCard(product) {
 
   wishlistBtn.addEventListener("click", () => {
     const isAdded = toggleWishlist(product);
+    // Correct classes to toggle for the wishlist icon
     wishlistIconElement.classList.toggle("bxs-heart", isAdded);
     wishlistIconElement.classList.toggle("bx-heart", !isAdded);
     wishlistBtn.classList.toggle("active", isAdded);
@@ -344,11 +336,10 @@ navLinks.forEach((link) => {
   link.addEventListener("click", toggleMobileNav);
 });
 
-// Search icon toggle
+// Search functionality is now always active, no need for a toggle event
 if (searchIconBtn) {
   searchIconBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    handleSearchToggle();
   });
 }
 
