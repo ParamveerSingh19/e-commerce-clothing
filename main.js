@@ -36,18 +36,16 @@ syncHeaderHeightVar();
 window.addEventListener("resize", syncHeaderHeightVar);
 
 // CORE WEBSITE FUNCTIONALITY
-function handleMobileNav() {
-  body.classList.toggle("menu-open");
 
-  const isOpen = body.classList.contains("menu-open");
+// FIX: Combined the logic into a single toggle function
+function toggleMobileNav() {
+  // Check if the menu is currently open
+  const isOpen = body.classList.toggle("menu-open");
+  // Set the aria-hidden attribute based on the new state
   mobileNavMenu.setAttribute("aria-hidden", String(!isOpen));
 }
 
-function closeMobileNav() {
-  body.classList.remove("menu-open");
-  mobileNavMenu.setAttribute("aria-hidden", "true");
-}
-
+// Function to handle opening the search bar, remains the same
 function handleSearchToggle() {
   searchContainer.classList.toggle("active");
   if (searchContainer.classList.contains("active")) {
@@ -327,22 +325,23 @@ function handleSearch() {
 
 // EVENT LISTENERS & INITIALIZATION
 
-// Hamburger toggle + drawer/overlay control
-mobileMenuToggle.addEventListener("click", handleMobileNav);
+// FIX: Change event listeners to use the new toggleMobileNav function
+if (mobileMenuToggle) {
+  mobileMenuToggle.addEventListener("click", toggleMobileNav);
+}
+
+if (mobileCloseBtn) {
+  mobileCloseBtn.addEventListener("click", toggleMobileNav);
+}
 
 // Overlay closes drawer
 if (mobileNavOverlay) {
-  mobileNavOverlay.addEventListener("click", closeMobileNav);
-}
-
-// Close button inside drawer
-if (mobileCloseBtn) {
-  mobileCloseBtn.addEventListener("click", closeMobileNav);
+  mobileNavOverlay.addEventListener("click", toggleMobileNav);
 }
 
 // Close on link click
 navLinks.forEach((link) => {
-  link.addEventListener("click", closeMobileNav);
+  link.addEventListener("click", toggleMobileNav);
 });
 
 // Search icon toggle

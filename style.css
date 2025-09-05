@@ -463,9 +463,11 @@ body.menu-open .mobile-nav-menu {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* FIX: This is the main change to prevent images from cropping */
 .product-image-container {
   width: 100%;
-  height: 300px;
+  /* Removed fixed height to allow images to maintain their aspect ratio */
+  aspect-ratio: 1 / 1.1; /* Use a ratio to maintain a consistent card size */
   overflow: hidden;
   margin-bottom: 1rem;
 }
@@ -473,7 +475,8 @@ body.menu-open .mobile-nav-menu {
 .product-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* This is the key change to prevent cropping */
+  object-position: center; /* Centers the image within the container */
   transition: transform 0.3s ease;
 }
 
@@ -860,10 +863,13 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   }
 }
 
+/* FIX: Ensure cart and wishlist items are laid out correctly on mobile */
 @media (max-width: 640px) {
   .cart-grid {
     display: flex;
     flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
   }
 
   .cart-items {
@@ -873,5 +879,11 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   .cart-summary {
     width: 100%;
     margin-top: 2rem;
+  }
+  .wishlist-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
   }
 }
