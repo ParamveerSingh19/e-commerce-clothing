@@ -919,11 +919,11 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
+
   .header-actions {
-  display: flex;
-  margin-left: auto
-  ;
+    display: flex;
+    margin-left: auto;
+  }
 
   .header-container {
     padding-top: 0.75rem;
