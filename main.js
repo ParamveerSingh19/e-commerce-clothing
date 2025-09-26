@@ -48,8 +48,9 @@ function toggleMobileNav() {
   const isOpen = body.classList.toggle("menu-open");
   if (mobileNavMenu) mobileNavMenu.setAttribute("aria-hidden", String(!isOpen));
   const hamburgerIcon = mobileMenuToggle?.querySelector("i");
-  if (hamburgerIcon)
-    hamburgerIcon.className = isOpen ? "bx bx-x" : "bx bx-menu";
+
+  // Hamburger icon always stays hamburger (bx-menu); no toggle to cross
+  if (hamburgerIcon) hamburgerIcon.className = "bx bx-menu";
 }
 
 // Close mobile nav
@@ -185,7 +186,6 @@ function createProductCard(product) {
       }">Buy Now</button>
     </div>
   `;
-  // Wishlist toggle state sync
   const wishlist = getLocalStorageData("wishlist");
   const wishlistBtn = card.querySelector(".add-to-wishlist");
   const wishlistIconElement = wishlistBtn.querySelector("i");
@@ -250,13 +250,9 @@ function renderWishlistItems() {
 
 // Render cart items
 function renderCartItems() {
-  console.log("Rendering cart items");
   const cart = getLocalStorageData("cart");
   const container = document.querySelector(".cart-items");
-  if (!container) {
-    console.warn("Cart container not found");
-    return;
-  }
+  if (!container) return;
   container.innerHTML = "";
   const cartGrid = document.querySelector(".cart-grid");
   const existingSummary = document.getElementById("cart-summary");
@@ -342,7 +338,7 @@ function handleSearch() {
   });
 }
 
-// Show feedback messages
+// Show feedback messages with compact width
 function showFeedback(message, type = "info") {
   const existingFeedback = document.querySelector(".feedback-message");
   if (existingFeedback) existingFeedback.remove();
@@ -357,9 +353,14 @@ function showFeedback(message, type = "info") {
       type === "success" ? "#4CAF50" : type === "error" ? "#f44336" : "#2196F3"
     };
     color: white;
-    padding: 12px 20px;
+    padding: 12px 16px;
     border-radius: 8px;
     z-index: 1000;
+    max-width: 280px;
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+    text-align: center;
     animation: slideIn 0.3s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   `;
