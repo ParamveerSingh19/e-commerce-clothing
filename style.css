@@ -932,8 +932,8 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
   }
   
   .hero-section {
-    margin-top: 80px;  /* adjust this to clear the header */
-    padding-top: 2.5rem;
+    margin-top: 80px;  
+    padding-top: 3.5rem;
   }
   
   .header-actions {
