@@ -474,7 +474,6 @@ body.menu-open .mobile-nav-menu {
 }
 
 .product-actions .btn {
-  flex: 1;
   min-width: 120px;
   height: 48px;
   font-size: 0.9rem;
