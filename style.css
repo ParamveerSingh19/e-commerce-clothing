@@ -512,12 +512,22 @@ body.menu-open .mobile-nav-menu {
   color: #e91e63 !important;
 }
 
-/* CART & WISHLIST SECTIONS - FIXED BACKGROUND */
+/* CART & WISHLIST SECTIONS - FIXED BACKGROUND & VISIBILITY */
 .cart-section,
 #wishlist-section {
-  padding: 1rem 0;
+  padding: 1.5rem 1rem;
   background-color: transparent;
   margin: 0;
+}
+
+.cart-items,
+#wishlist-items-container {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 50px;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
 }
 
 .cart-grid {
@@ -684,8 +694,8 @@ body.menu-open .mobile-nav-menu {
 .form-card.hidden {
   position: absolute;
   opacity: 0;
-  transform: scale(0.9);
   pointer-events: none;
+  transform: scale(0.9);
 }
 
 .form-title {
