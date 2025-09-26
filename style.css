@@ -919,7 +919,23 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
+  
+  .header-container {
+    justify-content: center;
+    position: relative;
+  }
+  
+  .logo-group {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .hero-section {
+    margin-top: 60px;  /* adjust this to clear the header */
+    padding-top: 2.5rem;
+  }
+  
   .header-actions {
     display: flex;
     margin-left: auto;
