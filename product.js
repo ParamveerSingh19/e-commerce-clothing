@@ -4,14 +4,14 @@ const ALL_PRODUCTS = {
     {
       id: 101,
       name: "Casual Men's Shirt",
-      price: 4149.0, 
+      price: 4149.0,
       image: "/images/casual-mens-shirt.png",
     },
     {
       id: 102,
       name: "Men's Slim Fit Jeans",
       price: 5415.0, // Converted to INR
-      image:'/images/mens-slim-fit-jeans.png',
+      image: "/images/mens-slim-fit-jeans.png",
     },
     {
       id: 103,

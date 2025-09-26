@@ -36,11 +36,35 @@ window.addEventListener("resize", syncHeaderHeightVar);
 
 // CORE WEBSITE FUNCTIONALITY
 
-// This is the new, combined logic from your other code
+// Enhanced mobile navigation toggle
 function toggleMobileNav() {
   const isOpen = body.classList.toggle("menu-open");
   if (mobileNavMenu) {
     mobileNavMenu.setAttribute("aria-hidden", String(!isOpen));
+  }
+
+  // Update hamburger icon
+  const hamburgerIcon = mobileMenuToggle?.querySelector("i");
+  if (hamburgerIcon) {
+    if (isOpen) {
+      hamburgerIcon.className = "bx bx-x";
+    } else {
+      hamburgerIcon.className = "bx bx-menu";
+    }
+  }
+}
+
+// Close mobile nav when clicking on links
+function closeMobileNav() {
+  body.classList.remove("menu-open");
+  if (mobileNavMenu) {
+    mobileNavMenu.setAttribute("aria-hidden", "true");
+  }
+
+  // Reset hamburger icon
+  const hamburgerIcon = mobileMenuToggle?.querySelector("i");
+  if (hamburgerIcon) {
+    hamburgerIcon.className = "bx bx-menu";
   }
 }
 
@@ -74,6 +98,9 @@ function addToCart(product) {
   cart.push(product);
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartDisplay(cart.length);
+
+  // Show feedback to user
+  showFeedback(`${product.name} added to cart!`, "success");
 }
 
 function removeFromCart(productId) {
@@ -95,11 +122,13 @@ function toggleWishlist(product) {
     wishlist.push(product);
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     updateWishlistDisplay(wishlist.length);
+    showFeedback(`${product.name} added to wishlist!`, "success");
     return true;
   } else {
     wishlist.splice(index, 1);
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     updateWishlistDisplay(wishlist.length);
+    showFeedback(`${product.name} removed from wishlist!`, "info");
     return false;
   }
 }
@@ -114,7 +143,7 @@ function updateCartDisplay(count) {
       cartIcon.appendChild(badge);
     }
     badge.textContent = count;
-    badge.style.display = "flex"; // Ensure it's visible on mobile
+    badge.style.display = "flex";
   } else {
     if (badge) {
       badge.style.display = "none";
@@ -132,7 +161,7 @@ function updateWishlistDisplay(count) {
       wishlistIcon.appendChild(badge);
     }
     badge.textContent = count;
-    badge.style.display = "flex"; // Ensure it's visible on mobile
+    badge.style.display = "flex";
   } else {
     if (badge) {
       badge.style.display = "none";
@@ -140,45 +169,40 @@ function updateWishlistDisplay(count) {
   }
 }
 
+// Enhanced product card creation with better event handling
 function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
   card.dataset.productId = product.id;
 
   card.innerHTML = `
-    <button class="add-to-wishlist" aria-label="Add to wishlist"><i class="bx bx-heart"></i></button>
+    <button class="add-to-wishlist" aria-label="Add to wishlist" data-product-id="${
+      product.id
+    }">
+      <i class="bx bx-heart"></i>
+    </button>
     <div class="product-image-container">
-      <img src="${product.image}" alt="${product.name}" class="product-image" />
+      <img src="${product.image}" alt="${
+    product.name
+  }" class="product-image" loading="lazy" />
     </div>
     <h3 class="product-title">${product.name}</h3>
     <p class="product-price">₹${product.price.toFixed(2)}</p>
     <div class="product-actions">
-      <button class="btn btn-primary add-to-cart">Add to Cart</button>
-      <button class="btn btn-secondary buy-now">Buy Now</button>
+      <button class="btn btn-primary add-to-cart" data-product-id="${
+        product.id
+      }">Add to Cart</button>
+      <button class="btn btn-secondary buy-now" data-product-id="${
+        product.id
+      }">Buy Now</button>
     </div>
   `;
 
+  // Check if already in wishlist
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
   const wishlistBtn = card.querySelector(".add-to-wishlist");
   const wishlistIconElement = wishlistBtn.querySelector("i");
 
-  wishlistBtn.addEventListener("click", () => {
-    const isAdded = toggleWishlist(product);
-    // Correct classes to toggle for the wishlist icon
-    wishlistIconElement.classList.toggle("bxs-heart", isAdded);
-    wishlistIconElement.classList.toggle("bx-heart", !isAdded);
-    wishlistBtn.classList.toggle("active", isAdded);
-  });
-
-  card.querySelector(".add-to-cart").addEventListener("click", () => {
-    addToCart(product);
-  });
-
-  card.querySelector(".buy-now").addEventListener("click", () => {
-    addToCart(product);
-    window.location.href = "cart.html";
-  });
-
-  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
   if (wishlist.some((item) => item.id === product.id)) {
     wishlistBtn.classList.add("active");
     wishlistIconElement.classList.remove("bx-heart");
@@ -190,10 +214,12 @@ function createProductCard(product) {
 
 function renderProducts(products) {
   if (!productsContainer) return;
+
   productsContainer.innerHTML = "";
+
   if (products.length === 0) {
     productsContainer.innerHTML =
-      "<p style='text-align:center; padding: 2rem;'>No products found.</p>";
+      "<p style='text-align:center; padding: 2rem; grid-column: 1 / -1;'>No products found.</p>";
   } else {
     products.forEach((product) => {
       productsContainer.appendChild(createProductCard(product));
@@ -207,7 +233,6 @@ function renderWishlistItems() {
   wishlistItemsContainer.innerHTML = "";
 
   if (wishlist.length === 0) {
-    /* Fix: Use the new empty-message class for centering */
     wishlistItemsContainer.innerHTML =
       "<div class='empty-message'>Your wishlist is empty.</div>";
   } else {
@@ -219,20 +244,22 @@ function renderWishlistItems() {
       itemElement.innerHTML = `
         <img src="${product.image}" alt="${
         product.name
-      }" class="wishlist-item-image">
+      }" class="wishlist-item-image" loading="lazy">
         <div class="item-info">
           <h3 class="item-name">${product.name}</h3>
           <p class="item-price">₹${product.price.toFixed(2)}</p>
+          <div class="product-actions">
+            <button class="btn btn-primary add-to-cart" data-product-id="${
+              product.id
+            }">Add to Cart</button>
+          </div>
         </div>
-        <button class="remove-btn" aria-label="Remove from wishlist">
+        <button class="remove-btn" aria-label="Remove from wishlist" data-product-id="${
+          product.id
+        }">
           <i class="bx bx-x"></i>
         </button>
       `;
-
-      itemElement.querySelector(".remove-btn").addEventListener("click", () => {
-        toggleWishlist(product);
-        itemElement.remove();
-      });
 
       wishlistItemsContainer.appendChild(itemElement);
     });
@@ -241,33 +268,26 @@ function renderWishlistItems() {
 
 function renderCartItems() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  // Get the containers from the DOM
   const cartItemsContainer = document.querySelector(".cart-items");
   const cartGrid = document.querySelector(".cart-grid");
 
-  // Clear previous content to prevent duplicates
   if (cartItemsContainer) {
     cartItemsContainer.innerHTML = "";
   }
 
-  // Also clear the summary box if it exists
   const existingSummary = document.getElementById("cart-summary");
   if (existingSummary) {
     existingSummary.remove();
   }
 
   if (cart.length === 0) {
-    // If cart is empty, show the "empty" message
     if (cartItemsContainer) {
-      /* Fix: Use the new empty-message class for centering */
       cartItemsContainer.innerHTML =
         "<div class='empty-message'>Your cart is empty.</div>";
     }
   } else {
     let total = 0;
 
-    // Render each item in the cart
     cart.forEach((product) => {
       total += product.price;
       const itemElement = document.createElement("div");
@@ -276,26 +296,24 @@ function renderCartItems() {
       itemElement.innerHTML = `
         <img src="${product.image}" alt="${
         product.name
-      }" class="cart-item-image">
+      }" class="cart-item-image" loading="lazy">
         <div class="item-info">
           <h3 class="item-name">${product.name}</h3>
           <p class="item-price">₹${product.price.toFixed(2)}</p>
         </div>
         <div class="cart-actions">
-          <button class="remove-btn" aria-label="Remove from cart">
+          <button class="remove-btn" aria-label="Remove from cart" data-product-id="${
+            product.id
+          }">
             <i class="bx bx-x"></i>
           </button>
         </div>
       `;
-      itemElement.querySelector(".remove-btn").addEventListener("click", () => {
-        removeFromCart(product.id);
-      });
       if (cartItemsContainer) {
         cartItemsContainer.appendChild(itemElement);
       }
     });
 
-    // Dynamically create and append the cart summary section
     const cartSummaryElement = document.createElement("div");
     cartSummaryElement.className = "cart-summary";
     cartSummaryElement.id = "cart-summary";
@@ -318,52 +336,189 @@ function renderCartItems() {
   }
 }
 
+// Enhanced search functionality with better results display
 function handleSearch() {
   if (searchInput) {
-    searchInput.addEventListener("keyup", (e) => {
-      const searchTerm = e.target.value.toLowerCase();
-      const allProductsArray = [].concat(...Object.values(ALL_PRODUCTS));
-      const filteredProducts = allProductsArray.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm)
-      );
-      renderProducts(filteredProducts);
+    let searchTimeout;
+    searchInput.addEventListener("input", (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+
+        if (searchTerm === "") {
+          // Reset to original products based on current page
+          const body = document.body;
+          const category = body.dataset.category;
+
+          if (category && ALL_PRODUCTS[category]) {
+            renderProducts(ALL_PRODUCTS[category]);
+          } else if (
+            window.location.pathname.endsWith("index.html") ||
+            window.location.pathname === "/"
+          ) {
+            const latestArrivals = ALL_PRODUCTS.men
+              .slice(0, 3)
+              .concat(ALL_PRODUCTS.women.slice(0, 3));
+            renderProducts(latestArrivals);
+          }
+          return;
+        }
+
+        const allProductsArray = [].concat(...Object.values(ALL_PRODUCTS));
+        const filteredProducts = allProductsArray.filter((product) =>
+          product.name.toLowerCase().includes(searchTerm)
+        );
+
+        // Add search results class for better styling
+        if (productsContainer) {
+          productsContainer.classList.add("search-results");
+        }
+
+        renderProducts(filteredProducts);
+      }, 300);
     });
   }
 }
 
+// Enhanced feedback system
+function showFeedback(message, type = "info") {
+  // Remove any existing feedback
+  const existingFeedback = document.querySelector(".feedback-message");
+  if (existingFeedback) {
+    existingFeedback.remove();
+  }
+
+  const feedback = document.createElement("div");
+  feedback.className = `feedback-message feedback-${type}`;
+  feedback.textContent = message;
+  feedback.style.cssText = `
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: ${
+      type === "success" ? "#4CAF50" : type === "error" ? "#f44336" : "#2196F3"
+    };
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  `;
+
+  document.body.appendChild(feedback);
+
+  setTimeout(() => {
+    feedback.style.animation = "slideOut 0.3s ease forwards";
+    setTimeout(() => feedback.remove(), 300);
+  }, 3000);
+}
+
+// Enhanced event delegation for dynamically created elements
+function setupEventDelegation() {
+  // Handle all button clicks with delegation
+  document.addEventListener("click", (e) => {
+    const target = e.target.closest("button");
+    if (!target) return;
+
+    const productId = target.dataset.productId;
+    if (!productId) return;
+
+    // Find the product
+    const allProductsArray = [].concat(...Object.values(ALL_PRODUCTS));
+    const product = allProductsArray.find((p) => p.id == productId);
+    if (!product) return;
+
+    // Handle different button types
+    if (target.classList.contains("add-to-cart")) {
+      e.preventDefault();
+      addToCart(product);
+    } else if (target.classList.contains("buy-now")) {
+      e.preventDefault();
+      addToCart(product);
+      window.location.href = "cart.html";
+    } else if (target.classList.contains("add-to-wishlist")) {
+      e.preventDefault();
+      const isAdded = toggleWishlist(product);
+      const wishlistIconElement = target.querySelector("i");
+      wishlistIconElement.classList.toggle("bxs-heart", isAdded);
+      wishlistIconElement.classList.toggle("bx-heart", !isAdded);
+      target.classList.toggle("active", isAdded);
+    } else if (target.classList.contains("remove-btn")) {
+      e.preventDefault();
+      // Handle removal from cart or wishlist
+      if (target.closest(".cart-item")) {
+        removeFromCart(product.id);
+      } else if (target.closest(".wishlist-item")) {
+        toggleWishlist(product);
+        target.closest(".wishlist-item").remove();
+      }
+    }
+  });
+}
+
 // EVENT LISTENERS & INITIALIZATION
 
-// FIX: Change event listeners to use the new toggleMobileNav function
+// Mobile navigation event listeners
 if (mobileMenuToggle) {
-  mobileMenuToggle.addEventListener("click", toggleMobileNav);
+  mobileMenuToggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleMobileNav();
+  });
 }
 
 if (mobileCloseBtn) {
-  mobileCloseBtn.addEventListener("click", toggleMobileNav);
+  mobileCloseBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeMobileNav();
+  });
 }
 
 // Overlay closes drawer
 if (mobileNavOverlay) {
-  mobileNavOverlay.addEventListener("click", toggleMobileNav);
+  mobileNavOverlay.addEventListener("click", closeMobileNav);
 }
 
-// Close on link click
+// Close mobile nav when clicking on navigation links
 navLinks.forEach((link) => {
-  link.addEventListener("click", toggleMobileNav);
+  link.addEventListener("click", closeMobileNav);
 });
 
-// Search functionality is now always active, no need for a toggle event
+// Search functionality
 if (searchIconBtn) {
   searchIconBtn.addEventListener("click", (e) => {
     e.preventDefault();
+    searchInput?.focus();
   });
 }
+
+// Close mobile nav on window resize to desktop
+window.addEventListener("resize", () => {
+  if (window.innerWidth >= 640 && body.classList.contains("menu-open")) {
+    closeMobileNav();
+  }
+});
+
+// Add CSS for animations
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
 
 document.addEventListener("DOMContentLoaded", () => {
   syncHeaderHeightVar();
   initializeCounts();
   handleFormToggle();
   handleSearch();
+  setupEventDelegation();
 
   const body = document.body;
   const category = body.dataset.category;
@@ -375,8 +530,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.pathname === "/"
   ) {
     const latestArrivals = ALL_PRODUCTS.men
-      .slice(0, 4)
-      .concat(ALL_PRODUCTS.women.slice(0, 4));
+      .slice(0, 3)
+      .concat(ALL_PRODUCTS.women.slice(0, 3));
     renderProducts(latestArrivals);
   } else if (window.location.pathname.endsWith("wishlist.html")) {
     renderWishlistItems();
