@@ -1,4 +1,5 @@
 /* FONT IMPORT & CSS RESET */
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 * {
@@ -19,6 +20,7 @@ html {
 }
 
 /* THEME VARIABLES */
+
 body {
   transition: background 0.3s ease, color 0.3s ease;
   min-height: 100vh;
@@ -45,6 +47,7 @@ body.theme-light {
 }
 
 /* GLOBAL & UTILITIES */
+
 .container {
   max-width: 1400px;
   margin-left: auto;
@@ -130,6 +133,7 @@ img {
 }
 
 /* HEADER & NAVIGATION */
+
 header {
   position: sticky;
   top: 0;
@@ -166,30 +170,6 @@ header.scrolled {
   font-size: clamp(1.25rem, 5vw, 25px);
   font-weight: 800;
   color: var(--text-color);
-}
-
-@media (max-width: 640px) {
-  .header-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 52px;
-  }
-  .logo-group {
-    flex: 1 1 auto;
-    align-items: center;
-  }
-  .logo-text {
-    margin-right: auto;
-    font-size: 1.2rem;
-    line-height: 1.3;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-  }
-  .header-actions {
-    margin-left: 0;
-  }
 }
 
 .desktop-nav {
@@ -274,6 +254,7 @@ header.scrolled {
   color: var(--muted-text);
 }
 
+/* MOBILE NAVIGATION */
 :root {
   --header-height: 64px;
 }
@@ -363,7 +344,7 @@ body.menu-open .mobile-nav-menu {
   padding: 4rem 0;
   background-color: var(--bg-color);
   margin-top: 20px;
-  margin-bottom: 180px; /* Add gap so subtitle not visible on load */
+  margin-bottom: 40px;
 }
 
 .hero-container {
@@ -938,6 +919,16 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+  
+  .header-actions {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .header-container {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
 
   .products-section {
     padding: 1.5rem 0;
@@ -945,8 +936,13 @@ body.menu-open > *:not(header, .mobile-nav-overlay, .mobile-nav-menu) {
 
   .hero-section {
     margin-top: 10px;
-    margin-bottom: 180px !important; /* large gap on mobile */
-    padding-bottom: 2.5rem !important;
+    margin-bottom: 20px;
+    padding: 2rem 0;
+  }
+
+  .cart-section,
+  #wishlist-section {
+    padding: 0.5rem 0;
   }
 
   .products-grid {
