@@ -1,4 +1,4 @@
-# 🛍️ Navya Enterprises - Your Modern Shopping Destination
+# 🛍️ Navya Enterprises - Your Modern Shopping Destination (Internship Project)
 
 Welcome to **Navya Enterprises**, a sleek and modern e-commerce web application designed for seamless online shopping. This project is meticulously crafted using **HTML, CSS, and JavaScript** to showcase a clean, responsive, and engaging shopping experience. It features a complete shopping cart system, wishlist functionality, and a smooth user flow from product discovery to checkout.
 
